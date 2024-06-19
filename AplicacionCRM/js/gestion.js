@@ -35,13 +35,11 @@ const requestOptions = {
 fetch("http://144.126.210.74:8080/api/gestion", requestOptions)
   .then((response) => {
     if(response.status == 200){
-      alert('Gestión agregada con éxito.');
-      location.href="listar.html";
-    }
-    if(response.status == 400) {
-      alert("Error al crear gestión.");
-    }else {
-      alert('Error al crear gestión.');
+      mensajeAlerta('Gestion agregada con éxito.').then(() => {
+        location.href="listar.html";
+      });
+  } else {
+      mensajeAlerta('Error al agregar la gestión.');
   }
   })
   .then((result) => console.log(result))
@@ -177,10 +175,11 @@ const requestOptions = {
 fetch("http://144.126.210.74:8080/api/gestion/"+ g_id_gestion, requestOptions)
   .then((response) => {
     if(response.status == 200){
-      alert('Gestión actualizada con éxito.');
-      location.href="listar.html";
-    }else {
-      alert('Error al actualizar la gestión.');
+      mensajeAlerta('Gestión actualizada con éxito.').then(() => {
+        location.href="listar.html";
+      });
+  } else {
+      mensajeAlerta('Error al actualizar la gestión.');
   }
   })
   .then((result) => console.log(result))
@@ -201,10 +200,11 @@ const requestOptions = {
 fetch("http://144.126.210.74:8080/api/gestion/"+ g_id_gestion, requestOptions)
   .then((response) => {
     if(response.status == 200){ //o 204
-      alert('Gestión eliminada con éxito.');
-      location.href = "listar.html";
+      mensajeAlerta('Gestión eliminada con éxito.').then(() => {
+        location.href="listar.html";
+      });
   } else {
-      alert('Error al eliminar la gestión');
+      mensajeAlerta('Error al eliminar la gestión.');
 }
   })
   .then((result) => console.log(result))
@@ -316,4 +316,16 @@ function validarCampos(id_usuario, id_cliente, id_tipo_gestion, id_resultado, co
       return false;
   }
   return true;
+}
+function mensajeAlerta(mensaje) {
+  // Cambia el contenido del cuerpo del modal
+  document.getElementById('contenidoModal').textContent = mensaje;
+
+  // Muestrar el modal
+  var myModal = new bootstrap.Modal(document.getElementById('alertaModal'), {});
+  myModal.show();
+  return new Promise((resolve) => {
+    myModal.show();
+    myModal._element.addEventListener('hidden.bs.modal', resolve, { once: true });
+  });
 }

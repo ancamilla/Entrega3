@@ -36,10 +36,11 @@ const requestOptions = {
 fetch("http://144.126.210.74:8080/api/cliente", requestOptions)
 .then((response) => { 
   if(response.status >= 200 && response.status < 300) {
-      alert('Cliente agregado con éxito.');
-      location.href = 'listar.html';
+      mensajeAlerta('Cliente agregado con éxito.').then(() => {
+        location.href="listar.html";
+      });
   } else {
-      alert('Error al agregar el cliente.');
+      mensajeAlerta('Error al agregar el cliente.');
   }
 })
 .catch((error) => console.error(error));
@@ -136,10 +137,11 @@ function eliminarCliente(){
  fetch("http://144.126.210.74:8080/api/cliente/"+ g_id_cliente, requestOptions)
   .then((response) => {
     if(response.status == 200){ //o 204
-        alert('Cliente eliminado con éxito.');
-        location.href = "listar.html";
-    } else {
-        alert('Error al eliminar el cliente.');
+      mensajeAlerta('Cliente eliminado con éxito.').then(() => {
+        location.href="listar.html";
+      });
+  } else {
+      mensajeAlerta('Error al eliminar el cliente.');
   }
 })
 .catch((error) => console.error(error));
@@ -213,10 +215,11 @@ const requestOptions = {
 fetch("http://144.126.210.74:8080/api/cliente/"+ g_id_cliente, requestOptions)
 .then((response) => {
   if(response.status == 200){
-      alert('Cliente actualizado con éxito.');
-      location.href = "listar.html";
+      mensajeAlerta('Cliente actualizado con éxito.').then(() => {
+        location.href="listar.html";
+      });
   } else {
-      alert('Error al actualizar el cliente: ' + data.message);
+      mensajeAlerta('Error al actualizar el cliente.');
   }
 })
 .then((result) => console.log(result))
@@ -229,4 +232,16 @@ function validarCampos(txt_id_cliente, txt_dv, txt_nombres, txt_apellidos, txt_e
       return false;
   }
   return true;
+}
+function mensajeAlerta(mensaje) {
+  // Cambia el contenido del cuerpo del modal
+  document.getElementById('contenidoModal').textContent = mensaje;
+
+  // Muestrar el modal
+  var myModal = new bootstrap.Modal(document.getElementById('alertaModal'), {});
+  myModal.show();
+  return new Promise((resolve) => {
+    myModal.show();
+    myModal._element.addEventListener('hidden.bs.modal', resolve, { once: true });
+  });
 }

@@ -39,10 +39,11 @@ redirect: "follow"
 fetch("http://144.126.210.74:8080/api/usuario", requestOptions)
 .then((response) => {
   if(response.status == 200){
-    alert('Usuario agregado con éxito.');
-    location.href="listar.html";
-  }else {
-    alert('Error al crear usuario');
+    mensajeAlerta('Usuario agregado con éxito.').then(() => {
+      location.href="listar.html";
+    });
+} else {
+    mensajeAlerta('Error al agregar al usuario.');
 }
 })
 .then((result) => console.log(result))
@@ -138,10 +139,11 @@ function listarUsuario(){
    fetch("http://144.126.210.74:8080/api/usuario/"+ g_id_usuario, requestOptions)
     .then((response) => {
       if(response.status == 200){
-        alert('Usuario eliminado con éxito.');
-        location.href="listar.html";
-      }else {
-        alert('Error al eliminar usuario.');
+        mensajeAlerta('Usuario eliminado con éxito.').then(() => {
+          location.href="listar.html";
+        });
+    } else {
+        mensajeAlerta('Error al eliminar al usuario.');
       }
     })
     .then((result) => console.log(result))
@@ -223,10 +225,11 @@ function listarUsuario(){
   fetch("http://144.126.210.74:8080/api/usuario/"+ g_id_usuario, requestOptions)
     .then((response) => {
       if(response.status == 200){
-        alert('Usuario actualizado con éxito.');
-        location.href="listar.html";
-      }else {
-        alert('Error al actualizar usuario.');
+        mensajeAlerta('Usuario actualizado con éxito.').then(() => {
+          location.href="listar.html";
+        });
+    } else {
+        mensajeAlerta('Error al actualizar al usuario.');
       }
     })
     .then((result) => console.log(result))
@@ -240,4 +243,16 @@ function validarCampos(id_usuario, dv, nombres, apellidos, email, celular, usern
       return false;
   }
   return true;
+}
+function mensajeAlerta(mensaje) {
+  // Cambia el contenido del cuerpo del modal
+  document.getElementById('contenidoModal').textContent = mensaje;
+
+  // Muestrar el modal
+  var myModal = new bootstrap.Modal(document.getElementById('alertaModal'), {});
+  myModal.show();
+  return new Promise((resolve) => {
+    myModal.show();
+    myModal._element.addEventListener('hidden.bs.modal', resolve, { once: true });
+  });
 }

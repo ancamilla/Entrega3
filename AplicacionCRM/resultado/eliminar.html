@@ -60,16 +60,26 @@
         <div class="container">
             <h1>Eliminar resultado</h1>
             <hr>
-           
-                
-               
            <div class="alert alert-danger" id="lbl_eliminar">
-            
            </div>
                 <input type="button" value="Eliminar" class="btn btn-danger" onclick="eliminarResultado();">
                 <input type="button" value="Cancelar" class="btn btn-secondary" onclick="javascript:history.back();">
-           
-
+        </div>
+        <div class="modal fade" id="alertaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Mensaje</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body" id="contenidoModal">
+                <!-- Aquí se insertará el mensaje -->
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
         </div>
     </body>
 </html>

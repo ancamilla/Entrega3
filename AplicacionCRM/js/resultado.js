@@ -26,10 +26,11 @@ function agregarResultado(){
   fetch("http://144.126.210.74:8080/api/resultado", requestOptions)
     .then((response) => {
       if(response.status == 200){
-        alert('Resultado agregado con éxito.');
-        location.href="listar.html";
-      }else {
-        alert('Error al agregar resultado.');
+        mensajeAlerta('Resultado agregado con éxito.').then(() => {
+          location.href="listar.html";
+        });
+    } else {
+        mensajeAlerta('Error al agregar el resultado.');
     }
     })
     .then((result) => console.log(result))
@@ -118,10 +119,11 @@ function listarResultado(){
   fetch("http://144.126.210.74:8080/api/resultado/"+ g_id_resultado, requestOptions)
     .then((response) => {
       if(response.status == 200){
-        alert('Resultado eliminado con éxito.');
-        location.href="listar.html";
-      }else {
-        alert('Error al eliminar el resultado.');
+        mensajeAlerta('Resultado eliminado con éxito.').then(() => {
+          location.href="listar.html";
+        });
+    } else {
+        mensajeAlerta('Error al eliminar el resultado.');
   }
     })
     .then((result) => console.log(result))
@@ -177,10 +179,11 @@ function listarResultado(){
   fetch("http://144.126.210.74:8080/api/resultado/"+ g_id_resultado, requestOptions)
     .then((response) => {
       if(response.status == 200){
-        alert('Resultado actualizada con éxito.');
-        location.href="listar.html";
-      }else {
-        alert('Error al actualizar el resultado.');
+        mensajeAlerta('Resultado actualizado con éxito.').then(() => {
+          location.href="listar.html";
+        });
+    } else {
+        mensajeAlerta('Error al actualizar el resultado.');
     }
     })
     .then((result) => console.log(result))
@@ -193,4 +196,16 @@ function listarResultado(){
         return false;
     }
     return true;
+}
+function mensajeAlerta(mensaje) {
+  // Cambia el contenido del cuerpo del modal
+  document.getElementById('contenidoModal').textContent = mensaje;
+
+  // Muestrar el modal
+  var myModal = new bootstrap.Modal(document.getElementById('alertaModal'), {});
+  myModal.show();
+  return new Promise((resolve) => {
+    myModal.show();
+    myModal._element.addEventListener('hidden.bs.modal', resolve, { once: true });
+  });
 }

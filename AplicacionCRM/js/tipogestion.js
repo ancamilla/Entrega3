@@ -27,10 +27,11 @@ const requestOptions = {
 fetch("http://144.126.210.74:8080/api/tipo_gestion", requestOptions)
   .then((response) => {
     if(response.status == 200){
-      alert('Tipo de gestión agregada con éxito.');
-      location.href="listar.html";
-    }else {
-      alert('Error al crear el tipo de gestión.');
+      mensajeAlerta('Tipo de gestión agregada con éxito.').then(() => {
+        location.href="listar.html";
+      });
+  } else {
+      mensajeAlerta('Error al agregar el tipo de gestión.');
   }
   })
   .then((result) => console.log(result))
@@ -136,10 +137,11 @@ const requestOptions = {
 fetch("http://144.126.210.74:8080/api/tipo_gestion/"+ g_id_tipo_gestion, requestOptions)
   .then((response) => {
     if(response.status == 200){
-      alert('Tipo de gestión actualizada con éxito.');
-      location.href="listar.html";
-    }else {
-      alert('Error al actualizar el tipo gestión.');
+      mensajeAlerta('Tipo de gestión actualizada con éxito.').then(() => {
+        location.href="listar.html";
+      });
+  } else {
+      mensajeAlerta('Error al actualizar el tipo de gestión.');
   }
   })
   .then((result) => console.log(result))
@@ -160,10 +162,11 @@ const requestOptions = {
 fetch("http://144.126.210.74:8080/api/tipo_gestion/"+ g_id_tipo_gestion, requestOptions)
   .then((response) => {
     if(response.status == 200){
-      alert('El tipo de gestión fue eliminado con éxito.');
-      location.href="listar.html";
-    }else {
-      alert('Error al eliminar el tipo gestion.');
+      mensajeAlerta('Tipo de gestión eliminada con éxito.').then(() => {
+        location.href="listar.html";
+      });
+  } else {
+      mensajeAlerta('Error al eliminar el tipo de gestión.');
 }
   })
   .then((result) => console.log(result))
@@ -192,4 +195,16 @@ function validarCampos(nombre_tipo_gestion) {
       return false;
   }
   return true;
+}
+function mensajeAlerta(mensaje) {
+  // Cambia el contenido del cuerpo del modal
+  document.getElementById('contenidoModal').textContent = mensaje;
+
+  // Muestrar el modal
+  var myModal = new bootstrap.Modal(document.getElementById('alertaModal'), {});
+  myModal.show();
+  return new Promise((resolve) => {
+    myModal.show();
+    myModal._element.addEventListener('hidden.bs.modal', resolve, { once: true });
+  });
 }
